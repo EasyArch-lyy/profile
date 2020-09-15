@@ -7,12 +7,12 @@ public class Profile {
 
     private Integer id;
     private String name;
+    private String account;
     private String passwd;
     private String path;
+    private String type;
     private String ip;
     private Integer port;
-    private String type;
-    private String account;
 
     public String getIp() {
         return ip;

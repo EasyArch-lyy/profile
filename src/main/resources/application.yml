@@ -1,9 +1,13 @@
 server:
   port: 8082
 
+jasypt:
+  encryptor:
+    password: liky
+
 profile:
   datasource:
     connection:
-      jdbc-url: jdbc:mysql://39.100.149.36:3306/javaDemo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-      username: root
-      password: 123456a
+      jdbc-url: ENC(7p1mmjNKZEC/MrqSgXM0ONeFnULh3ZZ2GBp+F53TX2QudvkYNIIyOD350xuSnubMC7BksqguTRhhFq9H7puLmPzY1g6VcVatcHJLyc84Q7KiIJlGGS7smAXUYfIhrXDDs85MQUYLDZ8783GFRMljqg==)
+      username: ENC(dCfdvbb2th6YYd4D0nKXUQ==)
+      password: ENC(wrcT6it+KJ4S5PeIiswCNw==)

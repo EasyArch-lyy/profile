@@ -166,6 +166,7 @@
             <artifactId>java-gitlab-api</artifactId>
             <version>4.1.0</version>
         </dependency>
+        <!-- 数据库加密配置-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
