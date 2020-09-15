@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jinxiu.profileshow.dao.UserDao">
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.jinxiu.profileshow.dto.User">
+        INSERT INTO user (name, account, passwd)
+        VALUES (#{user.name}, #{user.account}, #{user.passwd})
+    </insert>
+
+    <select id="selectNums" resultType="java.lang.Integer">
+         SELECT count(*) from user
+    </select>
+
+    <select id="getUser" resultType="com.jinxiu.profileshow.dto.User">
+        SELECT * FROM user
+        WHERE name = #{name}
+    </select>
+
+    <select id="getUserList" resultType="com.jinxiu.profileshow.dto.User">
+        SELECT * FROM user
+    </select>
+
+    <select id="getPasswd" resultType="java.lang.String">
+        SELECT passwd FROM user
+        WHERE account = #{account}
+    </select>
+
+    <delete id="deleteUserByN" parameterType="java.lang.String">
+        DELETE FROM user WHERE name = #{name}
+    </delete>
+
+    <select id="getAuthority" parameterType="java.lang.Integer">
+        SELECT role from user WHERE account = #{account}
+    </select>
+
+    <!--修改权限-->
+    <update id="changeAuthority">
+        UPDATE user SET role = #{role}
+        WHERE account = #{account}
+    </update>
+
+</mapper>

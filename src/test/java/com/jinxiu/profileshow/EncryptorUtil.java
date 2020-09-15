@@ -1,4 +1,4 @@
-package com.jinxiu.profileshow.util;
+package com.jinxiu.profileshow;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
@@ -10,11 +10,8 @@ import org.junit.Test;
 public class EncryptorUtil {
     private static StandardPBEStringEncryptor standardPBEStringEncryptor = new StandardPBEStringEncryptor();
 
-    public static void main(String[] arg) {
-        /*配置文件中配置如下的算法*/
-//        standardPBEStringEncryptor.setAlgorithm("PBEWithMD5AndDES");
-        /*配置文件中配置的password*/
-//        standardPBEStringEncryptor.setPassword("BJQVZSWCVPTSWUOH");
+    @Test
+    public void decry() {
         EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
         config.setAlgorithm("PBEWithMD5AndDES");
         config.setPassword("liky");

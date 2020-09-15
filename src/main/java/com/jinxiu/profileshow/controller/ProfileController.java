@@ -1,5 +1,6 @@
 package com.jinxiu.profileshow.controller;
 
+import com.jinxiu.profileshow.common.Constants;
 import com.jinxiu.profileshow.dto.Profile;
 import com.jinxiu.profileshow.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +52,24 @@ public class ProfileController {
     public boolean addProfile(@RequestBody Profile pro) {
         return profileService.addProfile(pro);
     }
+
+    /**
+     * 用户推出登录
+     *
+     * @param request HttpServletRequest
+     * @return success
+     */
+    @RequestMapping(value = "/logout")
+    public String logout(HttpServletRequest request){
+        synchronized (request.getSession()) {
+            String user = (String) request.getSession().getAttribute(Constants.NOW_USER);
+            if (user != null) {
+                request.getSession().removeAttribute(Constants.NOW_USER);
+                request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
+                request.getSession().removeAttribute(Constants.NOW_USER_PWD);
+            }
+        }
+        return Constants.API_RET_SUCCESS;
+    }
+
 }
