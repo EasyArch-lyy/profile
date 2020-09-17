@@ -1,7 +1,7 @@
 package com.jinxiu.profileshow.dto;
 
 /**
- * 配置类
+ * 服务器上中间件配置
  */
 public class Profile {
 
