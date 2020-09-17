@@ -8,7 +8,7 @@ dva框架
 配置展示页面和用户登录界面
 
 问题：
-dva登录部分，路由转发不到springboot监听端口
+组件问题
 
 后端进度：
 jenkins通过webook获取github MR信息 \
