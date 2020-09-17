@@ -57,41 +57,20 @@ public class UserService implements IUserService {
         return userDao.getUserList();
     }
 
-    public User searchUser(String name){
-        return name == null ? null : userDao.searchUser(name);
+    public User searchUser(Integer account){
+        return account == null ? null : userDao.searchUser(account);
     }
 
     /**
      * 用户登录，支持本地和LDAP用户
      */
-    public String login(String username, String password) {
-        try {
+    public boolean login(Integer account, String password) {
             //从数据库中查找本地用户
-            User userInfo = searchUser(username);
-            // 首先通过LDAP方式验证
-            LdapServerService ldapServerService = new LdapServerService(username, password);
-            boolean ldapAuthentication = ldapServerService.verifyLdapUser();
-            // LDAP认证失败 启动本地用户验证
-            if(ldapAuthentication == false){
-                logger.error("user {} login failed by LDAP,start auth local", username);
-                if(userInfo != null) {
-                    // 数据库的密码保存MD5哈希值
-                    String sPsd = userInfo.getPasswd();
-                    if (StringUtils.isEmpty(sPsd) || StringUtils.isEmpty(password) ||
-                            !sPsd.equalsIgnoreCase(Tools.getMD5Str(password, null))) {
-                        logger.error("user {} password check failed", username);
-                        return Constants.API_RET_ERROR;
-                    }
-                }else{
-                    logger.error("user {} does not exist in database", username);
-                    return Constants.API_RET_ERROR;
-                }
-            }
-            logger.info("user {} login success", username);
-            return Constants.API_RET_SUCCESS;
-        } catch (Exception e) {
-            logger.error("exception from login", e);
-            return Constants.API_RET_ERROR;
+        User userInfo = searchUser(account);
+        if (userInfo.getPasswd().equals(password)) {
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -101,5 +80,14 @@ public class UserService implements IUserService {
 
     public Integer getAuthority(Integer account){
         return userDao.getAuthority(account);
+    }
+
+    public boolean checkUserInfo(Integer account, String passwd) {
+
+        if (passwd.equals(userDao.getPasswd(account))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

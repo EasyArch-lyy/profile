@@ -27,10 +27,10 @@ public class LdapServerService {
 
     private static final Logger logger = LoggerFactory.getLogger(LdapServerService.class);
 
-    public LdapServerService(String username, String password) {
+    public LdapServerService(Integer account, String password) {
         StringBuilder sb = new StringBuilder();
         sb.append("cn=");
-        sb.append(username);
+        sb.append(account);
         sb.append(",ou=");
         sb.append(LDAPCommon.LDAP_OU);
         String[] dcArr = StringUtils.split(LDAPCommon.LDAP_DC, ".");
@@ -131,6 +131,4 @@ public class LdapServerService {
         }
         return (cookie == null) ? new byte[0] : cookie;
     }
-
-
 }

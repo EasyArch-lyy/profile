@@ -55,30 +55,14 @@ public class UserController {
     /**
      * 用户登录校验
      *
-     * @param request HttpServletRequest
      * @param account 用户账号
      * @param passwd  用户密码
-     * @return result
+     * @return boolean
      */
     @RequestMapping(value = "/checkUserInfo")
-    public String checkUserInfo(HttpServletRequest request, @RequestParam String account, @RequestParam String passwd) {
+    public boolean checkUserInfo(@RequestParam("account") Integer account, @RequestParam("passwd") String passwd) {
 
-        try {
-            String result = userService.login(account, passwd);
-            if (result.equalsIgnoreCase(Constants.API_RET_SUCCESS)) {
-                User userInfo = userService.searchUser(account);
-                if (userInfo != null) {
-                    request.getSession().setAttribute(Constants.NOW_USER_ACCOUNT, userInfo.getAccount());
-                }
-                request.getSession().setAttribute(Constants.NOW_USER, userInfo.getName());
-                request.getSession().setAttribute(Constants.NOW_USER_PWD, passwd);
-            }
-            return result;
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return "server exception";
-        }
+        return userService.login(account, passwd);
     }
 
     /**
@@ -119,13 +103,34 @@ public class UserController {
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request){
         synchronized (request.getSession()) {
-            String user = (String) request.getSession().getAttribute(Constants.NOW_USER);
+            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_NAME);
             if (user != null) {
-                request.getSession().removeAttribute(Constants.NOW_USER);
+                request.getSession().removeAttribute(Constants.NOW_USER_NAME);
                 request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
                 request.getSession().removeAttribute(Constants.NOW_USER_PWD);
             }
         }
         return Constants.API_RET_SUCCESS;
+    }
+
+    /**
+     * 获取当前登录用户
+     *
+     * @param request HttpServletRequest
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/getloginuser", method = RequestMethod.GET)
+    public Map<String, Object> getLoginUser(HttpServletRequest request) {
+        Map<String, Object> paraMap = new HashMap<>();
+        Integer account = (Integer) request.getSession().getAttribute(Constants.NOW_USER_ACCOUNT);
+        if (account != null && !("").equals(account)) {
+            User user = userService.searchUser(account);
+            String name = user.getName();
+            paraMap.put("name", name);
+            paraMap.put("account", account);
+            paraMap.put("role", user.getRole());
+        }
+        paraMap.put("user", account);
+        return paraMap;
     }
 }

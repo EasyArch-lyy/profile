@@ -41,4 +41,10 @@
         WHERE account = #{account}
     </update>
 
+    <!--根据账号获取用户-->
+    <select id="searchUser" resultType="com.jinxiu.profileshow.dto.User">
+        SELECT * FROM user
+        WHERE account = #{account}
+    </select>
+
 </mapper>

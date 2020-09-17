@@ -12,7 +12,7 @@ public interface UserDao {
 
     int addUser(@Param("User") User user);
 
-    User searchUser(@Param("username") String username);
+    User searchUser(@Param("account") Integer account);
 
     List<User> getUserList();
 

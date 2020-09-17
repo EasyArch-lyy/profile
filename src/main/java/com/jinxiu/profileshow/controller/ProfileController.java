@@ -62,9 +62,9 @@ public class ProfileController {
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request){
         synchronized (request.getSession()) {
-            String user = (String) request.getSession().getAttribute(Constants.NOW_USER);
+            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_NAME);
             if (user != null) {
-                request.getSession().removeAttribute(Constants.NOW_USER);
+                request.getSession().removeAttribute(Constants.NOW_USER_NAME);
                 request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
                 request.getSession().removeAttribute(Constants.NOW_USER_PWD);
             }

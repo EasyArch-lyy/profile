@@ -21,7 +21,7 @@ public class Constants {
     public static final String API_RET_ERROR_JSON = "{\"result\":\"error\"}";
     public static final String API_RET_EMPTY_JSON = "{}";
 
-    public static final String NOW_USER = "nowUser";
+    public static final String NOW_USER_NAME = "nowUserName";
     public static final String NOW_USER_ACCOUNT = "nowUserAccount";
     public static final String NOW_USER_PWD = "nowUserPwd";
 

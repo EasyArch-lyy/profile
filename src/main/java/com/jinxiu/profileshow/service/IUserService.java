@@ -15,9 +15,9 @@ public interface IUserService {
 
     public List<User> getUserList();
 
-    public User searchUser(String name);
+    public User searchUser(Integer account);
 
-    public String login(String username, String password);
+    public boolean login(Integer account, String password);
 
     public boolean changeAuthority(Integer account, int role);
 
