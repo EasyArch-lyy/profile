@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jinxiu.profileshow.dao.AssetDao">
+
+    <!--查询资源列表-->
+    <select id="getAssets" resultType="com.jinxiu.profileshow.dto.Asset">
+        SELECT * FROM asset;
+    </select>
+
+    <!--根据id删除资源-->
+    <delete id="delAsset" parameterType="java.lang.Integer">
+        DELETE FROM asset
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="addAsset" parameterType="com.jinxiu.profileshow.dto.Asset">
+        INSERT INTO asset (name, account, passwd, ip)
+        VALUES (#{asset.name}, #{asset.account}, #{asset.passwd}, #{asset.ip})
+    </insert>
+
+    <update id="updateAsset" parameterType="com.jinxiu.profileshow.dto.Asset">
+        UPDATE asset SET name = #{asset.name}, passwd = #{asset.passwd}, ip=#{asset.ip}
+        WHERE id = #{asset.id}
+    </update>
+
+</mapper>

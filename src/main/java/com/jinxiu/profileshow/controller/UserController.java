@@ -103,10 +103,10 @@ public class UserController {
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request){
         synchronized (request.getSession()) {
-            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_NAME);
+            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_ACCOUNT);
             if (user != null) {
-                request.getSession().removeAttribute(Constants.NOW_USER_NAME);
                 request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
+                request.getSession().removeAttribute(Constants.NOW_TYPE);
                 request.getSession().removeAttribute(Constants.NOW_USER_PWD);
             }
         }
@@ -116,21 +116,22 @@ public class UserController {
     /**
      * 获取当前登录用户
      *
-     * @param request HttpServletRequest
-     * @return 用户信息
+     * @param userName
+     * @param password
+     * @param type     登录类型(账号登录or验证码登录)
+     * @return         用户信息(登录状态，登录类型，权限级别)
      */
     @RequestMapping(value = "/getloginuser", method = RequestMethod.GET)
-    public Map<String, Object> getLoginUser(HttpServletRequest request) {
-        Map<String, Object> paraMap = new HashMap<>();
-        Integer account = (Integer) request.getSession().getAttribute(Constants.NOW_USER_ACCOUNT);
-        if (account != null && !("").equals(account)) {
-            User user = userService.searchUser(account);
-            String name = user.getName();
-            paraMap.put("name", name);
-            paraMap.put("account", account);
-            paraMap.put("role", user.getRole());
-        }
-        paraMap.put("user", account);
-        return paraMap;
+    public Map<String, String> getLoginUser(@RequestParam("userName") Integer userName,
+                                            @RequestParam("password") String password,
+                                            @RequestParam("type") String type) {
+
+        return userService.getLoginUser(userName, password);
+    }
+
+    @RequestMapping(value = "/searchUsers", method = RequestMethod.POST)
+    public List<User> searchUsers(@RequestBody User user) {
+
+        return userService.searchUsers(user);
     }
 }

@@ -4,6 +4,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * 数据库用户名密码加密工具
  */
@@ -30,5 +32,16 @@ public class EncryptorUtil {
         String encrytedText = "7p1mmjNKZEC/MrqSgXM0ONeFnULh3ZZ2GBp+F53TX2QudvkYNIIyOD350xuSnubMC7BksqguTRhhFq9H7puLmPzY1g6VcVatcHJLyc84Q7KiIJlGGS7smAXUYfIhrXDDs85MQUYLDZ8783GFRMljqg==";
         String plainText = standardPBEStringEncryptor.decrypt(encrytedText);
         System.out.println(plainText);
+    }
+
+    @Test
+    public void run(/*String cmd*/){
+        String cmd = "dir";
+        Runtime run =Runtime.getRuntime();
+        try {
+            Process process = run.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

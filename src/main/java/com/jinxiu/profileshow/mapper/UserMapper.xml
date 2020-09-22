@@ -47,4 +47,18 @@
         WHERE account = #{account}
     </select>
 
+    <select id="searchUsers" parameterType="com.jinxiu.profileshow.dto.User"
+            resultType="com.jinxiu.profileshow.dto.User">
+        SELECT * FROM user
+        <where>
+            <if test="user.account!=''">
+                AND account LIKE '%${user.account}%'
+            </if>
+            <if test="user.name!=''">
+                AND name LIKE '%${userDto.name}%'
+            </if>
+            AND name != 'admin'
+        </where>
+    </select>
+
 </mapper>

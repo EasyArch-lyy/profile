@@ -26,7 +26,7 @@ public class ProfileShowApplication {
     public Connector connector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
-        connector.setPort(2555);
+        connector.setPort(8899);
         connector.setSecure(false);
         connector.setRedirectPort(466);
         return connector;

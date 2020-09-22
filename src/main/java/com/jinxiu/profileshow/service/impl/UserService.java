@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
 public class UserService implements IUserService {
@@ -90,4 +92,25 @@ public class UserService implements IUserService {
             return false;
         }
     }
+
+    public List<User> searchUsers(User user) {
+        return userDao.searchUsers(user);
+    }
+
+    public Map<String,String> getLoginUser(Integer account,String password){
+        Map<String, String> map = new HashMap<>();
+        map.put("loginType", "account");
+        if (account != null && !("").equals(account)) {
+            User user = userDao.searchUser(account);
+            if (user.getPasswd().equals(password)) {
+                map.put("status", "ok");
+                map.put("loginType", "account");
+                map.put("role", user.getRole().toString());
+                return map;
+            }
+        }
+        map.put("status", "error");
+        return map;
+    }
+
 }

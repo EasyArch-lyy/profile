@@ -9,6 +9,7 @@ import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.AntPathMatcher;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -604,5 +606,43 @@ public class Tools {
         }
         return flag;
     }
+
+    public static String getIpAddr(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if("127.0.0.1".equals(ip)){
+                // 根据网卡取本机配置的IP
+                InetAddress inet=null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                    if(inet != null){
+                        ip = inet.getHostAddress();
+                    }
+                } catch (Exception e) {
+                    logger.error("ip获取失败",e);
+                }
+            }
+        }
+        // 多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if(ip != null && ip.length() > 15 && ip.indexOf(',')>-1){
+            ip = ip.substring(0,ip.indexOf(','));
+        }
+        return ip;
+    }
+//    编辑命令
+//String cmd = "rm -rf " + StatusUtils.DIR ;
+//
+//创建Runtime实例
+//Runtime run = Runtime.getRuntime();
+//
+//创建进程
+//Process process = run.getRuntime().exec(cmd);
 
 }

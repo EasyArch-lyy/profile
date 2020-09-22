@@ -1,6 +1,7 @@
 package com.jinxiu.profileshow.controller;
 
 import com.jinxiu.profileshow.common.Constants;
+import com.jinxiu.profileshow.dto.Asset;
 import com.jinxiu.profileshow.dto.Profile;
 import com.jinxiu.profileshow.service.ProfileService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,22 +55,10 @@ public class ProfileController {
     }
 
     /**
-     * 用户推出登录
-     *
-     * @param request HttpServletRequest
-     * @return success
+     * 获取服务器资源列表
      */
-    @RequestMapping(value = "/logout")
-    public String logout(HttpServletRequest request){
-        synchronized (request.getSession()) {
-            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_NAME);
-            if (user != null) {
-                request.getSession().removeAttribute(Constants.NOW_USER_NAME);
-                request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
-                request.getSession().removeAttribute(Constants.NOW_USER_PWD);
-            }
-        }
-        return Constants.API_RET_SUCCESS;
+    @RequestMapping("/getAssets")
+    public List<Asset> getAssets(){
+        return profileService.getAssets();
     }
-
 }

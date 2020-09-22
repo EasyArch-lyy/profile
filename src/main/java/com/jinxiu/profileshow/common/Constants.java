@@ -21,9 +21,9 @@ public class Constants {
     public static final String API_RET_ERROR_JSON = "{\"result\":\"error\"}";
     public static final String API_RET_EMPTY_JSON = "{}";
 
-    public static final String NOW_USER_NAME = "nowUserName";
-    public static final String NOW_USER_ACCOUNT = "nowUserAccount";
-    public static final String NOW_USER_PWD = "nowUserPwd";
+    public static final String NOW_USER_ACCOUNT = "userName";
+    public static final String NOW_TYPE = "type";
+    public static final String NOW_USER_PWD = "password";
 
     //define case source
     public static final int CASE_SOURCE_CONFLUENCE = 1;

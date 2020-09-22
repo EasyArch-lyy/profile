@@ -14,6 +14,8 @@ public interface UserDao {
 
     User searchUser(@Param("account") Integer account);
 
+    List<User> searchUsers(@Param("user") User user);
+
     List<User> getUserList();
 
     User getUser(@Param("name")String name);
