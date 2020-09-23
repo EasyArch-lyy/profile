@@ -26,6 +26,7 @@ export default {
   },
   pre: {
     '/api/': {
+      // target: 'https://preview.pro.ant.design',
       target: 'http://10.160.0.37:8899',
       changeOrigin: true,
       pathRewrite: {

@@ -6,6 +6,7 @@ import com.jinxiu.profileshow.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,17 +39,26 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getUser")
-    public User getUser(@RequestParam("name")String name){
+    public User getUser(@RequestParam("name") String name) {
+
         return userService.getUser(name);
     }
 
     @RequestMapping(value = "/delUser")
-    public boolean delUser(@RequestParam("name")String name){
+    public boolean delUser(@RequestParam("name") String name) {
+
         return userService.deleteUserByN(name);
     }
 
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public User getCurrentUser(@RequestHeader("host") String hostName) {
+
+        return userService.currentUser(hostName);
+    }
+
     @RequestMapping(value = "/getAllUser")
-    public List<User> getUserList(){
+    public List<User> getUserList() {
+
         return userService.getUserList();
     }
 
@@ -60,9 +70,11 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/checkUserInfo")
-    public boolean checkUserInfo(@RequestParam("account") Integer account, @RequestParam("passwd") String passwd) {
+    public boolean checkUserInfo(@RequestParam("account") Integer account,
+                                 @RequestParam("passwd") String passwd,
+                                 @RequestHeader("host") String host) {
 
-        return userService.login(account, passwd);
+        return userService.login(account, passwd, host);
     }
 
     /**
@@ -101,20 +113,13 @@ public class UserController {
      * @return success
      */
     @RequestMapping(value = "/logout")
-    public String logout(HttpServletRequest request){
-        synchronized (request.getSession()) {
-            String user = (String) request.getSession().getAttribute(Constants.NOW_USER_ACCOUNT);
-            if (user != null) {
-                request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
-                request.getSession().removeAttribute(Constants.NOW_TYPE);
-                request.getSession().removeAttribute(Constants.NOW_USER_PWD);
-            }
-        }
-        return Constants.API_RET_SUCCESS;
+    public String logout(HttpServletRequest request) {
+
+        return userService.logout(request);
     }
 
     /**
-     * 获取当前登录用户
+     * 登录认证
      *
      * @param userName
      * @param password

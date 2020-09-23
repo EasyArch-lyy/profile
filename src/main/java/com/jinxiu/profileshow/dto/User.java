@@ -1,10 +1,37 @@
 package com.jinxiu.profileshow.dto;
 
 public class User {
+    private Integer id;
     private String name;
     private Integer account;
     private String passwd;
     private Integer role;
+    private Integer status;
+    private String loginIp;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getLoginIp() {
+        return loginIp;
+    }
+
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
+    }
 
     public String getName() {
         return name;

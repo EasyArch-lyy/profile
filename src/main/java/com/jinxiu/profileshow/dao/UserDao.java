@@ -29,4 +29,11 @@ public interface UserDao {
     int getAuthority(@Param("account")Integer account);
 
     boolean changeAuthority(@Param("account") Integer account, @Param("role") Integer role);
+
+    // 根据ip地址获取当前用户
+    User getCurrentUser(@Param("host")String host);
+
+    // 根据登录登出修改当前用户登录状态和登录ip地址
+    void updateStatus(@Param("name")String name,@Param("status")Integer status, @Param("loginip")String loginIp);
+
 }

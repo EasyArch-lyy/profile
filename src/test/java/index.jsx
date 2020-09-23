@@ -4,9 +4,11 @@ import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import CreateForm from '../../main/resources/static/src/pages/ProfileList/components/CreateForm';
+import UpdateForm from '../../main/resources/static/src/pages/ProfileList/components/UpdateForm';
+import { updateRule, addRule, removeRule } from '../../main/resources/static/src/pages/ProfileList/service';
+import { getProfile } from '@/services/profile';
+
 /**
  * 添加节点
  * @param fields
@@ -84,7 +86,6 @@ const TableList = () => {
       title: '编号',
       dataIndex: 'id',
       key: 'id',
-      // tip: '规则名称是唯一的 key',
       render: (dom, entity) => {
         return <a onClick={() => setRow(entity)}>{dom}</a>;
       },

@@ -61,4 +61,16 @@
         </where>
     </select>
 
+    <!--根据登录ip查询当前用户-->
+    <select id="getCurrentUser" parameterType="java.lang.String" resultType="com.jinxiu.profileshow.dto.User">
+        SELECT id, name, account, role FROM user
+        WHERE loginip = #{host}
+    </select>
+
+    <!--根据登录登出修改当前用户登录状态和登录ip地址-->
+    <update id="updateStatus" parameterType="java.util.Map">
+        UPDATE user set status = #{status} , loginip = #{loginIp}
+        WHERE id = #{id}
+    </update>
+
 </mapper>
