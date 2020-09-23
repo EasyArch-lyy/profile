@@ -36,4 +36,7 @@ public interface UserDao {
     // 根据登录登出修改当前用户登录状态和登录ip地址
     void updateStatus(@Param("name")String name,@Param("status")Integer status, @Param("loginip")String loginIp);
 
+    // 根据验证码获取用户
+    User getloginuserByPhone(@Param("mobile")String mobile, @Param("captcha")Integer captcha);
+
 }

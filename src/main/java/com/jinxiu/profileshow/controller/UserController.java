@@ -124,14 +124,15 @@ public class UserController {
      * @param userName
      * @param password
      * @param type     登录类型(账号登录or验证码登录)
-     * @return         用户信息(登录状态，登录类型，权限级别)
+     * @return 用户信息(登录状态 ， 登录类型 ， 权限级别)
      */
     @RequestMapping(value = "/getloginuser", method = RequestMethod.GET)
     public Map<String, String> getLoginUser(@RequestParam("userName") Integer userName,
                                             @RequestParam("password") String password,
-                                            @RequestParam("type") String type) {
+                                            @RequestParam("type") String type,
+                                            @RequestHeader("host") String host) {
 
-        return userService.getLoginUser(userName, password);
+        return userService.getLoginUser(userName, password, host);
     }
 
     @RequestMapping(value = "/searchUsers", method = RequestMethod.POST)
@@ -139,4 +140,14 @@ public class UserController {
 
         return userService.searchUsers(user);
     }
+
+    @RequestMapping(value = "/getloginuserByPhone", method = RequestMethod.GET)
+    public User getloginuserByPhone(@RequestParam("mobile")String mobile,
+                                    @RequestParam("captcha")Integer captcha,
+                                    @RequestParam("type")String type){
+
+        return userService.getloginuserByPhone(mobile,captcha,type);
+    }
+
+//    /login/getloginuser?mobile=18522015989&captcha=1234&type=mobile
 }

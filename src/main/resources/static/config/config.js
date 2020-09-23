@@ -74,7 +74,7 @@ export default defineConfig({
               ],
             },
             {
-              name: '查询表格',
+              name: '配置展示',
               icon: 'smile',
               path: '/listtable',
               component: './ListTableList',
@@ -84,6 +84,18 @@ export default defineConfig({
               icon: 'smile',
               path: '/accountcenter',
               component: './AccountCenter',
+            },
+            {
+              name: '查询表格',
+              icon: 'smile',
+              path: '/configview',
+              component: './ConfigView',
+            },
+            {
+              name: '资源监控集合',
+              icon: 'smile',
+              path: '/emptypage',
+              component: './EmptyPage',
             },
             {
               component: './404',

@@ -23,7 +23,7 @@ export default class TopTitle extends PureComponent {
           {
             this.props.backUrl ? (
               <Link to={this.props.backUrl}>
-                <Icon type="rollback" prev="dtdicon" />
+                <Icon type="rollback" prev="dixon" />
               </Link>
             ) : null
           }

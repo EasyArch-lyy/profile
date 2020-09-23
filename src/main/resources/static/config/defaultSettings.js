@@ -10,7 +10,7 @@ const proSettings = {
   menu: {
     locale: false,
   },
-  title: 'Test',
+  title: 'SPL监控平台',
   pwa: false,
   iconfontUrl: '',
 };

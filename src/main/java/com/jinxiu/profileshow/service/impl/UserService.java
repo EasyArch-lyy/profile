@@ -38,7 +38,8 @@ public class UserService implements IUserService {
         return userDao.getPasswd(account);
     }
 
-    public User getUser(String name){
+    public User getUser(String name) {
+
         return userDao.getUser(name);
     }
 
@@ -83,10 +84,12 @@ public class UserService implements IUserService {
     }
 
     public boolean changeAuthority(Integer account, int role) {
+
         return userDao.changeAuthority(account, role);
     }
 
-    public Integer getAuthority(Integer account){
+    public Integer getAuthority(Integer account) {
+
         return userDao.getAuthority(account);
     }
 
@@ -99,11 +102,16 @@ public class UserService implements IUserService {
         }
     }
 
+    /**
+     * 根据用户名获取用户信息
+     */
     public List<User> searchUsers(User user) {
+
         return userDao.searchUsers(user);
     }
 
-    public Map<String,String> getLoginUser(Integer account,String password){
+    public Map<String, String> getLoginUser(Integer account, String password, String hostName) {
+
         Map<String, String> map = new HashMap<>();
         map.put("loginType", "account");
         if (account != null && !("").equals(account)) {
@@ -112,6 +120,10 @@ public class UserService implements IUserService {
                 map.put("status", "ok");
                 map.put("loginType", "account");
                 map.put("role", user.getRole().toString());
+                user.setLoginIp(hostName);
+                user.setStatus(1);
+                userDao.updateStatus(user.getName(), user.getStatus(), user.getLoginIp());
+                logger.info("用户"+user.getName()+"在地址"+user.getLoginIp()+"登录");
                 return map;
             }
         }
@@ -119,22 +131,42 @@ public class UserService implements IUserService {
         return map;
     }
 
-    public User currentUser(String hostName){
+    /**
+     * 根据hostName获取当前用户
+     */
+    public User currentUser(String hostName) {
+
         User user = userDao.getCurrentUser(hostName);
         return user;
     }
 
-    public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
+
         synchronized (request.getSession()) {
             String userName = (String) request.getSession().getAttribute(Constants.NOW_USER_ACCOUNT);
             if (userName != null) {
                 request.getSession().removeAttribute(Constants.NOW_USER_ACCOUNT);
                 request.getSession().removeAttribute(Constants.NOW_TYPE);
                 request.getSession().removeAttribute(Constants.NOW_USER_PWD);
-                userDao.updateStatus(userName,0,"");
+                userDao.updateStatus(userName, 0, "");
             }
         }
         return Constants.API_RET_SUCCESS;
     }
+
+    public User getloginuserByPhone(String mobile, Integer captcha, String type){
+
+        return userDao.getloginuserByPhone(mobile,captcha);
+    }
+
+//     @RequestMapping(value = "/getloginuserByPhone", method = RequestMethod.GET)
+//    public User getloginuserByPhone(@RequestParam("mobile")String mobile,
+//                                    @RequestParam("captcha")Integer captcha,
+//                                    @RequestParam("type")String type){
+//
+//        return userService.getloginuserByPhone(mobile,captcha,type);
+//    }
+//
+////    /login/getloginuser?mobile=18522015989&captcha=1234&type=mobile
 
 }
